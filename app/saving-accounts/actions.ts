@@ -16,14 +16,12 @@ export async function getSavingAccounts() {
 
   const { data: savingAccounts, error: savingAccountsError } = await supabase
     .from('saving_accounts')
-    .select();
+    .select('*, currency:currencies(*)');
 
   if (savingAccountsError || !savingAccounts) {
     console.error(savingAccountsError);
     redirect('/error');
   }
-
-  console.log(savingAccounts);
 
   return savingAccounts;
 }
