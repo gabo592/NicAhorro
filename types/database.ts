@@ -9,11 +9,35 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      currencies: {
+        Row: {
+          created_at: string
+          id: string
+          iso2_code: string
+          iso3_code: string
+          locale: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          iso2_code: string
+          iso3_code: string
+          locale: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          iso2_code?: string
+          iso3_code?: string
+          locale?: string
+        }
+        Relationships: []
+      }
       saving_accounts: {
         Row: {
           balance: number
           created_at: string
-          currency: string
+          currency_id: string
           description: string
           id: string
           name: string
@@ -22,7 +46,7 @@ export type Database = {
         Insert: {
           balance: number
           created_at?: string
-          currency: string
+          currency_id?: string
           description: string
           id?: string
           name: string
@@ -31,13 +55,20 @@ export type Database = {
         Update: {
           balance?: number
           created_at?: string
-          currency?: string
+          currency_id?: string
           description?: string
           id?: string
           name?: string
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "saving_accounts_currency_id_fkey"
+            columns: ["currency_id"]
+            isOneToOne: false
+            referencedRelation: "currencies"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "saving_accounts_user_id_fkey"
             columns: ["user_id"]
