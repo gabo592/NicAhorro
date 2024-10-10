@@ -8,7 +8,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { ChangeEvent, useState } from "react";
 import { LoaderCircle } from "lucide-react";
-import { signup } from "@/app/auth/actions";
+import { signUp } from "@/app/auth/actions";
 
 const formSchema = z.object({
   image: z.any(),
@@ -51,7 +51,7 @@ export default function RegisterForm() {
 
     setIsLoading(true);
 
-    await signup(formData);
+    await signUp(formData);
 
     setIsLoading(false);
   }

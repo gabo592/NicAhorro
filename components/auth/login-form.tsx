@@ -9,7 +9,7 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { useState } from "react";
 import { LoaderCircle } from "lucide-react";
-import { login } from "@/app/auth/actions";
+import { signIn } from "@/app/auth/actions";
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Ingrese una dirección de correo electrónico válida.' }),
@@ -37,7 +37,7 @@ export default function LoginForm() {
 
     setIsLoading(true);
 
-    await login(formData);
+    await signIn(formData);
 
     setIsLoading(false);
   }

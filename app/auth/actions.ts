@@ -4,7 +4,7 @@ import { createClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
-export async function login(formData: FormData) {
+export async function signIn(formData: FormData) {
   const supabase = createClient();
 
   const data = {
@@ -23,7 +23,7 @@ export async function login(formData: FormData) {
   redirect('/');
 }
 
-export async function signup(formData: FormData) {
+export async function signUp(formData: FormData) {
   const supabase = createClient();
 
   const image = formData.get('image') as File;
@@ -69,4 +69,31 @@ async function uploadFile(file: File) {
     .getPublicUrl(`public/${file.name}`);
 
   return data.publicUrl;
+}
+
+export async function getUser() {
+  const supabase = createClient();
+
+  const { error, data } = await supabase.from('users').select().single();
+
+  if (error) {
+    console.error(error);
+    return null;
+  }
+
+  return data;
+}
+
+export async function signOut() {
+  const supabase = createClient();
+
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    console.error(error);
+    redirect('/error');
+  }
+
+  revalidatePath('/', 'layout');
+  redirect('/auth/login');
 }
