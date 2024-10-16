@@ -14,13 +14,13 @@ interface Props {
 export default function SavingAccountsPage({ searchParams }: Props) {
   return (
     <>
-      <header className="flex flex-row items-center justify-between p-4">
+      <header className="flex items-center justify-between p-4">
         <ReturnButton />
         <h1 className="text-xl font-bold">Cuentas de Ahorro</h1>
         <ModeToggle />
       </header>
       <main className="flex flex-col items-center p-4 gap-8">
-        <section className="flex flex-row items-center gap-4">
+        <section className="flex items-center gap-4 max-w-md">
           <Search />
           <Button asChild>
             <Link href='/saving-accounts/new'>Agregar</Link>

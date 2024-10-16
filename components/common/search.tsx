@@ -29,7 +29,7 @@ export default function Search({ placeholder = 'Buscar...' }: SearchProps) {
     <Input
       type="search"
       placeholder={placeholder}
-      className='md:min-w-80'
+      className='min-w-40 w-full'
       onChange={(e) => handleSearch(e.target.value)}
       defaultValue={searchParams.get('query')?.toString()}
     />
