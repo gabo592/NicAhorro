@@ -40,7 +40,7 @@ export default function DeleteAlertDialog({ action, id }: DeleteAlertDialogProps
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            ¿Está completamente seguro?
+            ¡Cuidado!
           </AlertDialogTitle>
           <AlertDialogDescription>
             Esta acción no puede revertirse.

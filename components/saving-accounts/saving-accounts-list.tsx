@@ -9,7 +9,7 @@ export default async function SavingAccountsList({ query }: SavingAccountsListPr
   const savingAccounts = await getSavingAccounts(query);
 
   return (
-    <section className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4">
+    <section className="grid lg:grid-cols-2 xl:grid-cols-4 gap-4">
       {savingAccounts.map((savingAccount) => (
         <SavingAccountsItem key={savingAccount.id} savingAccount={savingAccount} />
       ))}
