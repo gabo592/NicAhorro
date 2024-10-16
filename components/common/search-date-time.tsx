@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { DateRange } from 'react-day-picker';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Button } from '../ui/button';
@@ -10,8 +10,9 @@ import { format } from 'date-fns';
 import { Calendar } from '../ui/calendar';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
+import { Skeleton } from '../ui/skeleton';
 
-export default function SearchDateTime() {
+function DateTime() {
   const [date, setDate] = useState<DateRange | undefined>();
   const searchParams = useSearchParams();
   const pathName = usePathname();
@@ -100,4 +101,12 @@ export default function SearchDateTime() {
       </TooltipProvider>
     </section>
   );
+}
+
+export default function SearchDateTime() {
+  return (
+    <Suspense fallback={<Skeleton className='min-w-[280px] rounded-md h-9 px-4 py-2' />}>
+      <DateTime />
+    </Suspense>
+  )
 }

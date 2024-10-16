@@ -1,6 +1,6 @@
 import { ModeToggle } from "@/components/common/mode-toggle";
 import ReturnButton from "@/components/common/return-button";
-import Search from "@/components/common/search";
+import SearchBar from "@/components/common/search";
 import SearchDateTime from "@/components/common/search-date-time";
 import TransactionsList from "@/components/transactions/transactions-list";
 
@@ -22,7 +22,7 @@ export default function TransactionsPage({ searchParams }: Props) {
       </header>
       <main className="flex flex-col items-center gap-8 p-4">
         <section className="flex flex-col gap-4 w-full max-w-md">
-          <Search />
+          <SearchBar />
           <SearchDateTime />
         </section>
 

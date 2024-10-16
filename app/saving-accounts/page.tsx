@@ -1,6 +1,6 @@
 import { ModeToggle } from "@/components/common/mode-toggle";
 import ReturnButton from "@/components/common/return-button";
-import Search from "@/components/common/search";
+import SearchBar from "@/components/common/search";
 import SavingAccountsList from "@/components/saving-accounts/saving-accounts-list";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -21,7 +21,7 @@ export default function SavingAccountsPage({ searchParams }: Props) {
       </header>
       <main className="flex flex-col items-center p-4 gap-8">
         <section className="flex items-center gap-4 max-w-md">
-          <Search />
+          <SearchBar />
           <Button asChild>
             <Link href='/saving-accounts/new'>Agregar</Link>
           </Button>

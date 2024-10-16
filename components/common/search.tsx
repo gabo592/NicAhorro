@@ -2,13 +2,15 @@
 
 import { Input } from '../ui/input';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
+import { Suspense } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
+import { Skeleton } from '../ui/skeleton';
 
 interface SearchProps {
   placeholder?: string;
 }
 
-export default function Search({ placeholder = 'Buscar...' }: SearchProps) {
+function Search({ placeholder = 'Buscar...' }: SearchProps) {
   const searchParams = useSearchParams();
   const pathName = usePathname();
   const router = useRouter();
@@ -34,4 +36,12 @@ export default function Search({ placeholder = 'Buscar...' }: SearchProps) {
       defaultValue={searchParams.get('query')?.toString()}
     />
   );
+}
+
+export default function SearchBar() {
+  return (
+    <Suspense fallback={<Skeleton className='min-w-40 h-9 rounded-md' />}>
+      <Search />
+    </Suspense>
+  )
 }
