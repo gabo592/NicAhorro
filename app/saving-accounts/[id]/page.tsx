@@ -13,8 +13,7 @@ interface Props {
 }
 
 export default async function EditSavingAccountPage({ params }: Props) {
-  const currencies = await getCurrencies();
-  const savingAccount = await getSavingAccount(params.id);
+  const [currencies, savingAccount] = await Promise.all([getCurrencies(), getSavingAccount(params.id)]);
 
   if (!savingAccount) {
     redirect('/saving-accounts');

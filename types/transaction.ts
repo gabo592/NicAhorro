@@ -8,3 +8,7 @@ export type TransactionEntity = Table['Row'];
 export type Transaction = TransactionEntity & {
   account: SavingAccount | null;
 };
+
+export type CreateTransactionDto = Table['Insert'];
+
+export type UpdateTransactionDto = Table['Update'];

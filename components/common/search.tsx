@@ -31,7 +31,7 @@ function Search({ placeholder = 'Buscar...' }: SearchProps) {
     <Input
       type="search"
       placeholder={placeholder}
-      className='min-w-40 w-full'
+      className='w-full max-w-md'
       onChange={(e) => handleSearch(e.target.value)}
       defaultValue={searchParams.get('query')?.toString()}
     />
