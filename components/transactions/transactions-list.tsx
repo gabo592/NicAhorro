@@ -7,6 +7,7 @@ interface Props {
     dateFrom?: string;
     dateTo?: string;
   }
+  onlyToday?: boolean;
 }
 
 export default async function TransactionsList(props: Props) {

@@ -1,8 +1,37 @@
 'use server';
 
+import {
+  CreateTransactionDto,
+  UpdateTransactionDto,
+} from '@/types/transaction';
 import { createClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
 import { DateRange } from 'react-day-picker';
+
+export async function createTransaction(formData: FormData) {
+  const supabase = createClient();
+
+  const payload: CreateTransactionDto = {
+    description: formData.get('description') as string,
+    amount: Number(formData.get('amount') as string),
+    account_id: formData.get('accountId') as string,
+  };
+
+  const { error, data } = await supabase
+    .from('transactions')
+    .insert(payload)
+    .select()
+    .single();
+
+  if (error) {
+    console.error(error);
+    return null;
+  }
+
+  revalidatePath('/', 'layout');
+
+  return data;
+}
 
 interface Props {
   searchParams?: {
@@ -10,14 +39,26 @@ interface Props {
     dateFrom?: string;
     dateTo?: string;
   };
+  onlyToday?: boolean;
 }
 
-export async function getTransactions({ searchParams }: Props) {
+export async function getTransactions({ searchParams, onlyToday }: Props) {
   const supabase = createClient();
 
   let query = supabase
     .from('transactions')
     .select('*, account:saving_accounts(*, currency:currencies(*))');
+
+  if (onlyToday) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    query = query
+      .gte('created_at', today.toISOString())
+      .lt('created_at', tomorrow.toISOString());
+  }
 
   if (searchParams?.query) {
     query = query.ilike('description', `%${searchParams.query}%`);
@@ -48,6 +89,50 @@ export async function getTransactions({ searchParams }: Props) {
     console.error(error);
     return [];
   }
+
+  return data;
+}
+
+export async function getTransaction(id: string) {
+  const supabase = createClient();
+
+  const { error, data } = await supabase
+    .from('transactions')
+    .select('*, account:saving_accounts(*, currency:currencies(*))')
+    .eq('id', id)
+    .single();
+
+  if (error) {
+    console.error(error);
+    return null;
+  }
+
+  return data;
+}
+
+export async function updateTransaction(formData: FormData) {
+  const supabase = createClient();
+
+  const payload: UpdateTransactionDto = {
+    description: formData.get('description') as string,
+    amount: Number(formData.get('amount') as string),
+    account_id: formData.get('accountId') as string,
+  };
+  const id = formData.get('id') as string;
+
+  const { error, data } = await supabase
+    .from('transactions')
+    .update(payload)
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) {
+    console.error(error);
+    return null;
+  }
+
+  revalidatePath('/', 'layout');
 
   return data;
 }

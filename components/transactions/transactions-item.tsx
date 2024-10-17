@@ -4,20 +4,25 @@ import DeleteAlertDialog from '../common/delete-alert-dialog';
 import { deleteTransaction } from '@/app/transactions/actions';
 import { Button } from '../ui/button';
 import Link from 'next/link';
-import { Edit } from 'lucide-react';
+import { ArrowLeftRight, Edit } from 'lucide-react';
 
 interface Props {
   transaction: Transaction;
 }
 
 export default function TransactionItem({ transaction }: Props) {
+  const isIncome = transaction.amount > 0;
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{transaction.description}</CardTitle>
+        <CardTitle className="flex items-center gap-2">
+          <ArrowLeftRight className='w-4 h-4' />
+          {transaction.description}
+        </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-2xl font-semibold">
+        <p className={`text-2xl font-semibold ${isIncome ? 'text-primary' : 'text-destructive'}`}>
           {transaction.amount.toLocaleString(
             transaction.account?.currency?.locale,
             {
