@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/common/theme-provider";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import AppSidebar from "@/components/common/app-sidebar";
+import { cookies } from "next/headers";
+import { ModeToggle } from "@/components/common/mode-toggle";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,11 +37,14 @@ export const metadata: Metadata = {
   manifest: '/site.webmanifest'
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies()
+  const defaultOpen = cookieStore.get("sidebar:state")?.value === "true"
+
   return (
     <html lang="en">
       <head>
@@ -58,7 +65,19 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <SidebarProvider defaultOpen={defaultOpen}>
+            <AppSidebar />
+            <main className="w-full flex flex-col gap-2">
+              <header className="ml-2 mt-2 mr-2 flex items-center justify-between">
+                <SidebarTrigger type="button" />
+                <h1 className="text-xl font-bold">NicAhorro</h1>
+                <ModeToggle />
+              </header>
+              <section className="flex flex-col items-center p-4 gap-8">
+                {children}
+              </section>
+            </main>
+          </SidebarProvider>
         </ThemeProvider>
       </body>
     </html>
