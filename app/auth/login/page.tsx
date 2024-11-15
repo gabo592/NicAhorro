@@ -7,6 +7,7 @@ export default function LoginPage() {
   return (
     <>
       <header className="flex items-center justify-between p-4">
+        <section className="hidden md:block w-9 h-9"></section>
         <h1 className="text-xl font-bold">Iniciar Sesión</h1>
         <ModeToggle />
       </header>
