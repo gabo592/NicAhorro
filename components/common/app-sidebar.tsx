@@ -84,7 +84,7 @@ async function AppSidebarFooter() {
             </DropdownMenuTrigger>
             <DropdownMenuContent
               side="top"
-              className="w-[--radix-popper-anchor-width]"
+              className="w-[--radix-popper-anchor-width] min-w-56"
             >
               <DropdownMenuLabel>Opciones</DropdownMenuLabel>
               <DropdownMenuSeparator />
