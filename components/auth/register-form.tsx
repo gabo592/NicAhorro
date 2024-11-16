@@ -153,7 +153,7 @@ export default function RegisterForm() {
         />
         <Button type="submit" disabled={isLoading} className="w-full">
           {isLoading && <LoaderCircle className="w-4 h-4 mr-2" />}
-          Iniciar Sesión
+          Crear Cuenta
         </Button>
       </form>
     </Form>
