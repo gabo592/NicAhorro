@@ -6,6 +6,7 @@ import {
   Goal,
   Home,
   Landmark,
+  Settings,
   User,
 } from "lucide-react";
 
@@ -34,6 +35,14 @@ export const APP_MENU: Route[] = [
     title: "Transacciones",
     url: "/transactions",
     icon: ArrowRightLeft,
+  },
+];
+
+export const SETTINGS_MENU: Route[] = [
+  {
+    title: "Ajustes Generales",
+    url: "/settings",
+    icon: Settings,
   },
 ];
 

@@ -20,7 +20,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { APP_MENU, AVATAR_MENU } from "@/constant/menus";
+import { APP_MENU, AVATAR_MENU, SETTINGS_MENU } from "@/constant/menus";
 import Link from "next/link";
 import { getUser } from "@/app/auth/actions";
 import { Suspense } from "react";
@@ -49,6 +49,23 @@ function AppSidebarContent() {
           <SidebarMenu>
             {APP_MENU.map((item) => (
               <SidebarMenuItem key={item.title}>
+                <SidebarMenuButton asChild>
+                  <Link href={item.url}>
+                    <item.icon />
+                    <span>{item.title}</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </SidebarGroupContent>
+      </SidebarGroup>
+      <SidebarGroup>
+        <SidebarGroupLabel>Ajustes</SidebarGroupLabel>
+        <SidebarGroupContent>
+          <SidebarMenu>
+            {SETTINGS_MENU.map((item) => (
+              <SidebarMenuItem key={item.url}>
                 <SidebarMenuButton asChild>
                   <Link href={item.url}>
                     <item.icon />
