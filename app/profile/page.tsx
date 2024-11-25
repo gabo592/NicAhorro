@@ -1,10 +1,10 @@
-import { ModeToggle } from "@/components/common/mode-toggle";
-import ReturnButton from "@/components/common/return-button";
 import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Lock, Pencil, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { createClient } from "@/utils/supabase/server";
+import AppHeader from "@/components/common/app-header";
+import MainContainer from "@/components/common/main-container";
 
 export default async function ProfilePage() {
   const supabase = await createClient()
@@ -18,12 +18,8 @@ export default async function ProfilePage() {
 
   return (
     <>
-      <header className="flex items-center justify-between p-4">
-        <ReturnButton />
-        <h1 className="text-xl font-bold">Mi Perfil</h1>
-        <ModeToggle />
-      </header>
-      <main className="flex flex-col items-center p-4 gap-8">
+      <AppHeader title="Mi Perfil" />
+      <MainContainer>
         <section className="flex flex-col items-center gap-4">
           <Image src={avatar_url} alt="user_avatar" width={100} height={100} className="w-20 md:w-32 h-auto rounded-full" />
           <h2 className="text-lg font-bold">{first_name} {last_name}</h2>
@@ -44,7 +40,7 @@ export default async function ProfilePage() {
             Eliminar cuenta
           </Button>
         </section>
-      </main>
+      </MainContainer>
     </>
   )
 }
