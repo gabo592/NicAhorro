@@ -9,6 +9,7 @@ import {
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import { getUser } from '../auth/actions';
+import { revalidatePath } from 'next/cache';
 
 interface SearchProps {
   searchQuery?: string;
@@ -44,6 +45,8 @@ export async function createSavingAccount(
     console.error(error);
     return null;
   }
+
+  revalidatePath('/saving-accounts', 'layout');
 
   return data;
 }
@@ -123,15 +126,15 @@ export async function updateSavingAccount(
     return null;
   }
 
+  revalidatePath('/saving-accounts', 'layout');
+
   return data;
 }
 
-export async function deleteSavingAccount(
-  id: string
-): Promise<SavingAccountEntity | null> {
+export async function deleteSavingAccount(id: string): Promise<void> {
   const supabase = await createClient();
 
-  const { error, data } = await supabase
+  const { error } = await supabase
     .from('saving_accounts')
     .delete()
     .eq('id', id)
@@ -140,8 +143,8 @@ export async function deleteSavingAccount(
 
   if (error) {
     console.error(error);
-    return null;
+    return;
   }
 
-  return data;
+  revalidatePath('/saving-accounts', 'layout');
 }
