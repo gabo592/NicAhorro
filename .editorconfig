@@ -8,5 +8,12 @@ indent_style = space
 indent_size = 2
 end_of_line = crlf
 charset = utf-8
-trim_trailing_whitespace = false
+trim_trailing_whitespace = true
 insert_final_newline = false
+
+[*.{ts,tsx,js,jsx}]
+quote_type = single
+
+[*.md]
+max_line_length = off
+trim_trailing_whitespace = false
