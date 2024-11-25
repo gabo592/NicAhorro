@@ -1,16 +1,20 @@
 import { ModeToggle } from "@/components/common/mode-toggle";
 import ReturnButton from "@/components/common/return-button";
-import { getUser } from "../auth/actions";
 import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Lock, Pencil, Trash2 } from "lucide-react";
+import Image from "next/image";
+import { createClient } from "@/utils/supabase/server";
 
 export default async function ProfilePage() {
-  const user = await getUser()
+  const supabase = await createClient()
+  const { error, data } = await supabase.auth.getUser()
 
-  if (!user) {
+  if (!data || error) {
     redirect("/error")
   }
+
+  const { first_name, last_name, avatar_url } = data.user.user_metadata;
 
   return (
     <>
@@ -21,8 +25,9 @@ export default async function ProfilePage() {
       </header>
       <main className="flex flex-col items-center p-4 gap-8">
         <section className="flex flex-col items-center gap-4">
-          <img src={user.avatar_url} alt="user_avatar" className="w-20 md:w-32 h-auto rounded-full" />
-          <h2 className="text-lg font-bold">{user.first_name} {user.last_name}</h2>
+          <Image src={avatar_url} alt="user_avatar" width={100} height={100} className="w-20 md:w-32 h-auto rounded-full" />
+          <h2 className="text-lg font-bold">{first_name} {last_name}</h2>
+          <h3 className="text-md">{data.user.email}</h3>
         </section>
 
         <section className="flex flex-col md:flex-row w-full max-w-md lg:max-w-lg gap-4">
