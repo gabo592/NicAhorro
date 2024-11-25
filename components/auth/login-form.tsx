@@ -79,7 +79,7 @@ export default function LoginForm() {
         />
         <section className="flex flex-col w-full gap-4">
           <Button type="submit" disabled={isLoading}>
-            {isLoading && <LoaderCircle className="w-4 h-4 mr-2" />}
+            {isLoading && <LoaderCircle className="w-4 h-4 mr-2 animate-spin" />}
             Iniciar Sesión
           </Button>
           <Button variant="outline" type="button" asChild disabled={isLoading}>
